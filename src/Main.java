@@ -17,8 +17,13 @@ public class Main {
         try {
             a = getNumber(tokens[0]);
             b = getNumber(tokens[2]);
-        } catch (NumberFormatException e) {
+        }
+        catch (NumberFormatException e) {
             throw  new IllegalArgumentException("Invalid input format");
+        }
+
+        if(tokens.length > 3) {
+            throw new IllegalArgumentException("Too much operands");
         }
 
         if (a < 1 || a > 10 || b < 1 || b > 10) {
@@ -33,14 +38,20 @@ public class Main {
             default -> throw new IllegalArgumentException("Invalid operator");
         };
 
-        if (isRoman(tokens[0]) && isRoman(tokens[2])) {
+
+
+        if(isRoman(tokens[0]) && isRoman(tokens[2])) {
             if (result <= 0) {
                 throw new IllegalArgumentException("Roman numerals can not be negative or zero");
             }
             return toRoman(result);
+        } else
+                    if(isRoman(tokens[0]) || isRoman(tokens[2])) {
+            throw new IllegalArgumentException("Cannot mix arabic and roman numerals");
+        } else
+        {
+            return String.valueOf(result);
         }
-
-        return String.valueOf(result);
     }
 
     private static boolean isRoman(String s) {
@@ -84,4 +95,5 @@ public class Main {
             default -> throw new IllegalArgumentException("Invalid Roman numeral");
         };
     }
+
 }
